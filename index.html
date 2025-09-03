@@ -484,44 +484,6 @@
             </p>
         </div>
     </div>
-
-    <div class="comic-panel halftone-pattern">
-        <h3 style="font-family: 'Bangers', cursive; font-size: 2rem; color: #3742fa; text-align: center; margin-bottom: 20px; position: relative; z-index: 2;">
-            🎭 CONFIRMA TU ASISTENCIA 🎭
-        </h3>
-        <form class="attendance-form halftone-pattern" id="attendanceForm">
-            <div class="form-group">
-                <label for="guestName">👤 Nombre del Superhéroe:</label>
-                <input type="text" id="guestName" name="guestName" required>
-            </div>
-            <div class="form-group">
-                <label for="guestPhone">📱 Número de teléfono:</label>
-                <input type="tel" id="guestPhone" name="guestPhone" placeholder="+57 300 123 4567" required>
-            </div>
-            <div class="form-group">
-                <label for="attendance">🎯 ¿Vienes a la aventura?</label>
-                <select id="attendance" name="attendance" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="yes">¡Sí! Allí estaré 🦸‍♂️</option>
-                    <option value="no">No puedo asistir 😢</option>
-                    <option value="maybe">Tal vez pueda ir 🤔</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="companions">👫 ¿Cuántos acompañantes traes?</label>
-                <select id="companions" name="companions">
-                    <option value="0">Solo yo</option>
-                    <option value="1">1 acompañante</option>
-                    <option value="2">2 acompañantes</option>
-                    <option value="3">3 acompañantes</option>
-                    <option value="4">4+ acompañantes</option>
-                </select>
-            </div>
-            <button type="submit" class="btn-hero" id="submitBtn">¡CONFIRMAR ASISTENCIA!</button>
-        </form>
-        <div id="messageContainer"></div>
-    </div>
-
     <div class="comic-panel">
         <h3 style="font-family: 'Bangers', cursive; font-size: 2rem; color: #2ed573; text-align: center; margin-bottom: 25px; position: relative; z-index: 2;">
             📸 LÍNEA DE TIEMPO DEL HÉROE 📸
@@ -573,6 +535,43 @@
                 </div>
             </div>
         </div>
+
+            <div class="comic-panel halftone-pattern">
+        <h3 style="font-family: 'Bangers', cursive; font-size: 2rem; color: #3742fa; text-align: center; margin-bottom: 20px; position: relative; z-index: 2;">
+            🎭 CONFIRMA TU ASISTENCIA 🎭
+        </h3>
+        <form class="attendance-form halftone-pattern" id="attendanceForm">
+            <div class="form-group">
+                <label for="guestName">👤 Nombre del Superhéroe:</label>
+                <input type="text" id="guestName" name="guestName" required>
+            </div>
+            <div class="form-group">
+                <label for="guestPhone">📱 Número de teléfono:</label>
+                <input type="tel" id="guestPhone" name="guestPhone" placeholder="+57 300 123 4567" required>
+            </div>
+            <div class="form-group">
+                <label for="attendance">🎯 ¿Vienes a la aventura?</label>
+                <select id="attendance" name="attendance" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="yes">¡Sí! Allí estaré 🦸‍♂️</option>
+                    <option value="no">No puedo asistir 😢</option>
+                    <option value="maybe">Tal vez pueda ir 🤔</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="companions">👫 ¿Cuántos acompañantes traes?</label>
+                <select id="companions" name="companions">
+                    <option value="0">Solo yo</option>
+                    <option value="1">1 acompañante</option>
+                    <option value="2">2 acompañantes</option>
+                    <option value="3">3 acompañantes</option>
+                    <option value="4">4+ acompañantes</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-hero" id="submitBtn">¡CONFIRMAR ASISTENCIA!</button>
+        </form>
+        <div id="messageContainer"></div>
+    </div>
     </div>
 
     <script>
@@ -768,4 +767,5 @@
 </body>
 
 </html>
+
 
