@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Fiesta de Superhéroes!</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            color: #fff;
+            overflow-x: hidden;
+            padding: 10px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Patrón de puntos de cómic clásico */
+        .halftone-pattern {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .halftone-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(0,0,0,0.3) 20%, transparent 21%),
+                radial-gradient(circle at 0% 50%, rgba(255,255,255,0.1) 20%, transparent 21%),
+                radial-gradient(circle at 100% 50%, rgba(255,255,255,0.1) 20%, transparent 21%);
+            background-size: 15px 15px, 20px 20px, 25px 25px;
+            background-position: 0 0, 10px 10px, 5px 5px;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .comic-panel {
+            border: 4px solid #000;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            margin: 15px 0;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transform: perspective(800px) rotateX(3deg);
+            transition: all 0.3s ease;
+        }
+
+        .comic-panel:hover {
+            transform: perspective(800px) rotateX(0deg) scale(1.01);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-family: 'Bangers', cursive;
+            font-size: 2.8rem;
+            color: #ff0000;
+            text-align: center;
+            text-shadow: 3px 3px 0px #000, 6px 6px 0px #666;
+            margin-bottom: 15px;
+            animation: bounce 2s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-8px); }
+        }
+
+        .hero-name {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: #0066cc;
+            text-align: center;
+            text-shadow: 2px 2px 0px #000;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 3px solid #000;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .info-card:hover {
+            transform: scale(1.03) rotate(0.5deg);
+        }
+
+        .info-card::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 25px;
+            height: 25px;
+            background: #ffff00;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        .info-card h3 {
+            font-family: 'Bangers', cursive;
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 2px 2px 0px #000;
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-card p {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+
+        .attendance-form {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 18px;
+            border-radius: 12px;
+            border: 3px solid #000;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .form-group {
+            margin: 12px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #000;
+            font-size: 1rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 3px solid #000;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Comic Neue', cursive;
+            background: #fff;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .form-group input[type="tel"] {
+            background: #fff;
+            font-family: 'Comic Neue', cursive;
+            font-weight: bold;
+        }
+
+        .form-group input[type="tel"]::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        .form-group input[type="tel"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+            outline: none;
+        }
+
+        .btn-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: 3px solid #000;
+            padding: 15px 25px;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 0px #000;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .btn-hero:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-hero:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 25px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #ff4757, #3742fa);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 25px 0;
+            padding-left: 60px;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #000;
+            border-radius: 12px;
+            padding: 15px;
+            color: #000;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateX(30px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .timeline-item::before {
+            content: '★';
+            position: absolute;
+            left: 10px;
+            top: 15px;
+            width: 25px;
+            height: 25px;
+            background: #ffff00;
+            border: 3px solid #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            z-index: 10;
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .timeline-content h4 {
+            font-family: 'Bangers', cursive;
+            color: #ff4757;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .photo-placeholder {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: 4px solid #000;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px auto;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 10px;
+        }
+
+        .photo-placeholder:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .comic-burst {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #ff4757 0%, #ff6b7a 100%);
+            border: 3px solid #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-size: 1rem;
+            color: #fff;
+            text-shadow: 2px 2px 0px #000;
+            animation: pulseBurst 2s ease-in-out infinite;
+            z-index: 1000;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes pulseBurst {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(10deg); }
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-15px) rotate(180deg); opacity: 1; }
+        }
+
+        /* Efectos especiales para el patrón de cómic */
+        .comic-dots-bg {
+            background: 
+                radial-gradient(circle at 25% 25%, #ff4757 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, #3742fa 1.5px, transparent 1.5px),
+                radial-gradient(circle at 50% 0%, #ffff00 1px, transparent 1px);
+            background-size: 30px 30px, 25px 25px, 20px 20px;
+            background-position: 0 0, 10px 10px, 15px 0;
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        /* Animaciones de entrada */
+        .comic-panel {
+            animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        /* Responsive específico para móviles pequeños */
+        @media (max-width: 480px) {
+            body { padding: 5px; }
+            h1 { font-size: 2.2rem; }
+            .hero-name { font-size: 1.6rem; }
+            .comic-panel { padding: 15px; }
+            .timeline-item { padding-left: 50px; }
+            .photo-placeholder { width: 120px; height: 120px; font-size: 1.5rem; }
+        }
+
+        /* Modo oscuro automático */
+        @media (prefers-color-scheme: dark) {
+            .comic-panel {
+                background: rgba(30, 30, 30, 0.95);
+            }
+            
+            .timeline-content {
+                background: rgba(40, 40, 40, 0.95);
+                color: #fff;
+            }
+        }
+
+        /* Mejoras de accesibilidad */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-family: 'Bangers', cursive;
+            font-size: 1.2rem;
+            border: 3px solid #000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            animation: popIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements" id="floatingElements"></div>
+    
+    <div class="comic-burst" onclick="playSound()" aria-label="Botón de sonido cómic">
+        POW!
+    </div>
+
+    <div class="comic-panel halftone-pattern">
+        <div class="comic-dots-bg"></div>
+        <h1>¡FIESTA DE SUPERHÉROES!</h1>
+        <div class="hero-name">🦸‍♂️ MIGUEL CUMPLE 8 AÑOS 🦸‍♂️</div>
+        
+        <div class="info-card halftone-pattern">
+            <h3>📅 FECHA DEL EVENTO</h3>
+            <p>
+                Sábado, 15 de Septiembre 2025<br>
+                3:00 PM - 8:00 PM
+            </p>
+        </div>
+        
+        <div class="info-card halftone-pattern">
+            <h3>📍 UBICACIÓN</h3>
+            <p>
+                Salón de Fiestas "Súper Héroes"<br>
+                Calle 123 #45-67<br>
+                Ciudad Medellín
+            </p>
+        </div>
+    </div>
+
+    <div class="comic-panel halftone-pattern">
+        <h3 style="font-family: 'Bangers', cursive; font-size: 2rem; color: #3742fa; text-align: center; margin-bottom: 20px; position: relative; z-index: 2;">
+            🎭 CONFIRMA TU ASISTENCIA 🎭
+        </h3>
+        <form class="attendance-form halftone-pattern" id="attendanceForm">
+            <div class="form-group">
+                <label for="guestName">👤 Nombre del Superhéroe:</label>
+                <input type="text" id="guestName" name="guestName" required>
+            </div>
+            <div class="form-group">
+                <label for="guestPhone">📱 Número de teléfono:</label>
+                <input type="tel" id="guestPhone" name="guestPhone" placeholder="+57 300 123 4567" required>
+            </div>
+            <div class="form-group">
+                <label for="attendance">🎯 ¿Vienes a la aventura?</label>
+                <select id="attendance" name="attendance" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="yes">¡Sí! Allí estaré 🦸‍♂️</option>
+                    <option value="no">No puedo asistir 😢</option>
+                    <option value="maybe">Tal vez pueda ir 🤔</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="companions">👫 ¿Cuántos acompañantes traes?</label>
+                <select id="companions" name="companions">
+                    <option value="0">Solo yo</option>
+                    <option value="1">1 acompañante</option>
+                    <option value="2">2 acompañantes</option>
+                    <option value="3">3 acompañantes</option>
+                    <option value="4">4+ acompañantes</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-hero" id="submitBtn">¡CONFIRMAR ASISTENCIA!</button>
+        </form>
+        <div id="messageContainer"></div>
+    </div>
+
+    <div class="comic-panel">
+        <h3 style="font-family: 'Bangers', cursive; font-size: 2rem; color: #2ed573; text-align: center; margin-bottom: 25px; position: relative; z-index: 2;">
+            📸 LÍNEA DE TIEMPO DEL HÉROE 📸
+        </h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Año 1 - El Origen</h4>
+                    <div class="photo-placeholder">
+                        📸
+                    </div>
+                    <p>Nuestro pequeño héroe llega al mundo, listo para grandes aventuras.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Año 3 - Primeros Poderes</h4>
+                    <div class="photo-placeholder">
+                        🚀
+                    </div>
+                    <p>Miguel descubre sus primeros superpoderes: caminar, hablar y hacer reír a todos.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Año 5 - La Academia</h4>
+                    <div class="photo-placeholder">
+                        🎓
+                    </div>
+                    <p>Ingresa a la academia de superhéroes (colegio) y comienza su entrenamiento.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Año 7 - Nuevas Habilidades</h4>
+                    <div class="photo-placeholder">
+                        ⚽
+                    </div>
+                    <p>Desarrolla increíbles habilidades deportivas y se vuelve el héroe del recreo.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Año 8 - ¡La Celebración!</h4>
+                    <div class="photo-placeholder">
+                        🎉
+                    </div>
+                    <p>¡Hoy celebramos 8 años de este increíble superhéroe en acción!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para enviar confirmación por WhatsApp
+        function sendConfirmationWhatsapp(data) {
+            const numeroDestino = "573008014847"; // Tu número de WhatsApp
+            const mensaje = `🦸‍♂️ Confirmación Fiesta Miguel 🦸‍♂️
+
+👤 Nombre: ${data.nombre}
+📱 Teléfono: ${data.telefono}
+🎯 Asistencia: ${getAttendanceText(data.asistencia)}
+👫 Acompañantes: ${data.acompanantes || '0'}
+📅 Confirmado el: ${data.fecha}
+
+¡Nos vemos en la aventura! 🚀`;
+
+            const url = `https://wa.me/${numeroDestino}?text=${encodeURIComponent(mensaje)}`;
+            
+            console.log('Abriendo WhatsApp con URL:', url); // Para debug
+            
+            // Abrir WhatsApp en una nueva pestaña/ventana
+            window.open(url, "_blank");
+        }
+
+        // Función auxiliar para convertir código de asistencia a texto
+        function getAttendanceText(attendance) {
+            const texts = {
+                'yes': '✅ Sí, asistiré',
+                'no': '❌ No puedo asistir',
+                'maybe': '🤔 Tal vez pueda ir'
+            };
+            return texts[attendance] || attendance;
+        }
+
+        // Manejo del formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM cargado, inicializando...');
+            
+            const form = document.getElementById('attendanceForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const messageContainer = document.getElementById('messageContainer');
+
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    console.log('Formulario enviado'); // Para debug
+
+                    // Recopilar datos del formulario
+                    const formData = {
+                        nombre: document.getElementById("guestName").value,
+                        telefono: document.getElementById("guestPhone").value,
+                        asistencia: document.getElementById("attendance").value,
+                        acompanantes: document.getElementById("companions").value,
+                        fecha: new Date().toLocaleString()
+                    };
+
+                    console.log('Datos del formulario:', formData); // Para debug
+
+                    // Validación básica
+                    if (!formData.nombre || !formData.telefono || !formData.asistencia) {
+                        alert('⚠️ Por favor completa todos los campos obligatorios');
+                        return;
+                    }
+
+                    // Animación de carga
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Enviando...`;
+
+                    // Simular procesamiento y luego enviar a WhatsApp
+                    setTimeout(() => {
+                        try {
+                            sendConfirmationWhatsapp(formData);
+                            
+                            // Mostrar mensaje de éxito
+                            messageContainer.innerHTML = `
+                                <div class="success-message">
+                                    ✅ ¡Confirmación lista! Se abrió WhatsApp para enviar tu respuesta 🚀
+                                </div>
+                            `;
+                            
+                            // Resetear formulario
+                            form.reset();
+                            
+                        } catch (error) {
+                            console.error('Error al abrir WhatsApp:', error);
+                            alert('❌ Hubo un problema. Intenta nuevamente.');
+                        } finally {
+                            // Restaurar botón
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = "¡CONFIRMAR ASISTENCIA!";
+                        }
+                    }, 1500);
+                });
+            } else {
+                console.error('No se encontró el formulario');
+            }
+
+            // Configurar validación de teléfono
+            const phoneInput = document.getElementById('guestPhone');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', formatPhoneNumber);
+            }
+
+            // Inicializar otros elementos
+            createFloatingElements();
+            addTouchInteractions();
+        });
+
+        // Validación y formato de teléfono mejorado
+        function formatPhoneNumber(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Solo números
+            
+            // Manejar números colombianos
+            if (value.startsWith('57') && value.length > 2) {
+                value = value.substring(2);
+            }
+            
+            // Formatear según la longitud
+            if (value.length >= 10) {
+                const formatted = `+57 ${value.substring(0, 3)} ${value.substring(3, 6)} ${value.substring(6, 10)}`;
+                e.target.value = formatted;
+            } else if (value.length >= 6) {
+                const formatted = `+57 ${value.substring(0, 3)} ${value.substring(3, 6)} ${value.substring(6)}`;
+                e.target.value = formatted;
+            } else if (value.length >= 3) {
+                const formatted = `+57 ${value.substring(0, 3)} ${value.substring(3)}`;
+                e.target.value = formatted;
+            } else if (value.length > 0) {
+                e.target.value = `+57 ${value}`;
+            }
+        }
+
+        // Floating elements optimizado para móviles
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            if (!container) return;
+            
+            const elements = ['💥', '⚡', '🌟', '💫', '🦸‍♂️', '🦸‍♀️', '🚀', '💎'];
+            
+            // Menos elementos en móviles para mejor rendimiento
+            const elementCount = window.innerWidth < 768 ? 8 : 15;
+            
+            for (let i = 0; i < elementCount; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                element.style.left = Math.random() * 100 + '%';
+                element.style.top = Math.random() * 100 + '%';
+                element.style.animationDelay = Math.random() * 6 + 's';
+                element.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                container.appendChild(element);
+            }
+        }
+
+        // Sound effect con vibración para móviles
+        function playSound() {
+            const burst = document.querySelector('.comic-burst');
+            const sounds = ['POW!', 'BAM!', 'ZAP!', 'BOOM!', 'WHAM!'];
+            
+            burst.style.transform = 'scale(1.3)';
+            burst.textContent = sounds[Math.floor(Math.random() * sounds.length)];
+            
+            // Vibración en dispositivos móviles
+            if ('vibrate' in navigator) {
+                navigator.vibrate([100, 50, 100]);
+            }
+            
+            setTimeout(() => {
+                burst.style.transform = 'scale(1)';
+                burst.textContent = 'POW!';
+            }, 300);
+        }
+
+        // Touch interactions para móviles
+        function addTouchInteractions() {
+            const photos = document.querySelectorAll('.photo-placeholder');
+            photos.forEach(photo => {
+                photo.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    this.style.transform = 'scale(1.2) rotate(5deg)';
+                }, { passive: false });
+                
+                photo.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1.05) rotate(2deg)';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
